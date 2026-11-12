@@ -10,9 +10,9 @@ require(tidyverse)
   
  #3/28: added abs here for the absolute of the fit-fitTrue 
    o_biasA <-  o_allT %>% filter(ID!=0) %>% group_by(msTp,ID,outs) %>% mutate(fitTrue = as.numeric(fitTrue)) %>%
-     mutate(diffs=abs(fit-fitTrue)) %>%
+     mutate(diffs=(fit-fitTrue)) %>%
      summarize(sums=sum(diffs),trialm=max(simNum),measured_true=mean(as.numeric(measTrue)),fitTrue=mean(fitTrue),
-               fitTrueSecDev=mean(fitTrueSecDev),sum2=mean(abs(fit-fitTrue))) %>%
+               fitTrueSecDev=mean(fitTrueSecDev),sum2=mean(fit-fitTrue)) %>%
      mutate(bias=signif(sums/trialm,digits=3),fitTrueSecDev=signif(fitTrueSecDev,digits=3)) %>% 
      select(-sums) %>% rename(type=msTp)
 
