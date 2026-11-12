@@ -135,40 +135,7 @@ predComb <- function(typeM,testdataF,fits,dataInns,ins,outs){
         }
       }
     }
-  #calculate Qj
-    Qj <- vector(mode="numeric",length=peop*10)
-    for (kqj in 1:peop){
-    for (krj in 1:10){
-      ind = kqj+krj-1
-      for (ksj in 1:10){
-      Qj[[ind]] = Qj[[ind]] + fits[[krr]][[kss]]$fit[[kqq]]
-     } 
-    }
-    } 
-    Qj = 1/10*Qj
-  #Between nest variance
-    B <- vector(mode="numeric",length=peop)
-    for (kqq in 1:peop){
-    for (krr in 1:10){
-      indx = kqq+krr-1
-      B[[kqq]] <- B[[kqq]] + (Qj[[indx]]-fits1[[kqq]]/100)^2
-    }
-    }  
-    B = 1/9*B
-
-    #within nest variance
-    W <- vector(mode="numeric",length=peop)
-    for (kqk in 1:peop){
-      for (krk in 1:10){
-        indx2 = kqk+krr-1
-        for (ksk in 1:10){
-          W[[kqk]] <- W[[kqk]] + (fits[[krk]][[ksk]]$fit[[kqk]] - Qj[[indx2]])^2
-          }
-        }
-      }
-    W <- 1/10*1/9*W
-    
-    se.fits1 <- sqrt(se.fits1/100 + (1-1/10)*W + (1+1/10)*B)
+    se.fits1 <- sqrt(se.fits1/100)
     fits1 <- fits1/100
     fits2 <- data.frame(fit=fits1,se.fit=se.fits1) 
   } else {
